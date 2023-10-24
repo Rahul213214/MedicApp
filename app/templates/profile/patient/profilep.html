@@ -1,0 +1,131 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data</title>
+   <style>
+
+body {
+            font-family: Arial, sans-serif;
+            background-color: gray;
+        }
+
+        .box {
+            background-color: lightblue;
+            padding: 20px;
+            border: 5px solid #0f0f0f;
+            border-radius: 5px;
+            margin: 50px;
+        }
+
+        .box table {
+            width: 100%;
+            border-collapse: collapse; /* Collapse table borders */
+        }
+
+        .box table th, .box table td {
+            padding: 10px;
+            border: 2px solid #111010; /* Add cell borders */
+        }
+
+        .box form {
+            padding: 10px;
+            border: 1px solid #ccc; /* Add border to the form */
+            border-radius: 5px;
+        }
+    
+    </style>
+</head>
+<body>
+<div class="box">
+        <h1>Patient Data</h1>
+
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td><strong>Username</strong></td>
+                <td>{{ request.user }}</td>
+            </tr>
+            <tr>
+                <td><strong>First Name</strong></td>
+                <td>{{ request.user.first_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Last Name</strong></td>
+                <td>{{ request.user.last_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Email</strong></td>
+                <td>{{ request.user.email }}</td>
+            </tr>
+            <tr>
+                <td><strong>Address</strong></td>
+                <td>
+                    {% for patient in patients %}
+                        {{ patient.address }}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Profile Picture</strong></td>
+                <td>
+                    {% for x in patients %}
+                        <img src="{{ x.picture.url }}" alt="" height="100px" width="100px">
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+
+            <input type="submit" value="Upload">
+        </form>
+    </div>
+
+    <div class="box">
+        <h1 class="text-center alert alert-info">Show Post Data</h1>
+        {% if post %}
+        <h4>Table Data</h4>
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Image</th>
+                <th scope="col">category</th>
+                <th scope="col">Summary</th>
+                <th scope="col">Content</th>
+                <th scope="col">Draft</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for st in post %}
+                  <tr>
+                    <th scope="row">{{ st.id }}</th>
+                    <td>{{ st.title }}</td>
+                    <td><img src="{{ st.image.url }}" alt="" height="100px" width="100px"></td>
+                    <td>{{ st.category }}</td>
+                    <td>{{ st.summary }}</td>
+                    <td>{{ st.content }}</td>
+                    <td>{{ st.draft }}</td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    
+        {% else %}
+        <h4 class="text-center alert alert-warning">No records</h4>
+        {% endif %}
+    </div>
+
+    
+</body>
+</html>

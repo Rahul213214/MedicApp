@@ -1,0 +1,196 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>User Data</title>
+   <style>
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: rgb(119, 118, 118);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+    .container {
+        max-width: 800px;
+        padding: 20px;
+        background: lightblue;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px; /* Add margin to the bottom of the container */
+    }
+
+h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #3498db;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: #3498db;
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+strong {
+    font-weight: bold;
+}
+
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+    
+form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Style form labels */
+    label {
+        display: block;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    /* Style form inputs and textareas */
+    input[type="text"],
+    input[type="file"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    /* Style the submit button */
+    input[type="submit"] {
+        background: #3498db;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .button-like-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #3498db;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 3px;
+        margin-left: 50px;
+    }
+
+    .button-like-link:hover {
+        background: #258ec2; /* Change color on hover */
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Doctor Data</h1>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td><strong>Username</strong></td>
+                <td>{{ request.user }}</td>
+            </tr>
+            <tr>
+                <td><strong>First Name</strong></td>
+                <td>{{ request.user.first_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Last Name</strong></td>
+                <td>{{ request.user.last_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Email</strong></td>
+                <td>{{ request.user.email }}</td>
+            </tr>
+            <tr>
+                <td><strong>Address</strong></td>
+                <td>{% for doctor in doctors %}
+                    {{doctor.address}}
+                    
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>{% for doctor in doctors %}
+                    {{doctor.picture}}
+                    
+                    {% endfor %}</strong>
+                </td>
+                <td>
+                   
+                    {% for x in doctors %}
+                    <img src="{{x.picture.url}}" alt=""height="100px", width="100px">
+                
+                    {% endfor %}
+                
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    {{request.user}}
+
+    <a href="{% url 'addpost' %}" class="button-like-link">Addpost</a>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <input type="submit" value="upload">
+    </form> 
+
+    
+    
+</body>
+</html>
