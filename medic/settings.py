@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-j5nq(xehms0^29@dt0na(v$xgi!ew+*d*r42co(uoejkra3k9+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app']
 
 
 # Application definition
@@ -77,12 +77,19 @@ WSGI_APPLICATION = 'medic.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'medic',
+        'USER': 'root',
+        'PASSWORD': 'Rahul@123',
+        'HOST':'localhost',
+        'PORT':'3306',
     }
 }
+
 
 
 # Password validation
